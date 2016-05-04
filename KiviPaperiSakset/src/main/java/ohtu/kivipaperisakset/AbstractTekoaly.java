@@ -1,16 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ohtu.kivipaperisakset;
 
 import java.util.Scanner;
 
-import java.util.Scanner;
+/**
+ *
+ * @author Antero Oikkonen
+ */
+public abstract class AbstractTekoaly {
 
-// Kivi-Paperi-Sakset, jossa voidaan valita pelataanko vastustajaa
-// vastaan vai ei
-public class KPSParempiTekoaly extends AbstractTekoaly {
+    protected static final Scanner scanner = new Scanner(System.in);
 
     public void pelaa() {
         Tuomari tuomari = new Tuomari();
-        TekoalyParannettu tekoaly = new TekoalyParannettu(20);
+        Tekoaly tekoaly = new Tekoaly();
 
         System.out.print("Ensimmäisen pelaajan siirto: ");
         String ekanSiirto = scanner.nextLine();
@@ -24,6 +31,8 @@ public class KPSParempiTekoaly extends AbstractTekoaly {
             System.out.println(tuomari);
             System.out.println();
 
+            haeSyote(ekanSiirto, tokanSiirto, tekoaly);
+
         }
 
         System.out.println();
@@ -31,15 +40,11 @@ public class KPSParempiTekoaly extends AbstractTekoaly {
         System.out.println(tuomari);
     }
 
-    @Override
-    protected void haeSyote(String ekanSiirto, String tokanSiirto, Tekoaly tekoaly) {
-
-        System.out.print("Ensimmäisen pelaajan siirto: ");
-        ekanSiirto = scanner.nextLine();
-
-        tokanSiirto = tekoaly.annaSiirto();
-        System.out.println("Tietokone valitsi: " + tokanSiirto);
-        tekoaly.asetaSiirto(ekanSiirto);
+    protected abstract void haeSyote(String siirto1,String siirto2,Tekoaly tekoaly);
+    
+    
+    protected static boolean onkoOkSiirto(String siirto) {
+        return "k".equals(siirto) || "p".equals(siirto) || "s".equals(siirto);
     }
 
 }
